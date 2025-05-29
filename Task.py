@@ -111,6 +111,7 @@ class WebCrawlerTests(unittest.TestCase):
     def test_print_results(self, mock_stdout):
         crawler = WebCrawler()
         crawler.print_results(["https://test.com/result"])
+        # Bug Fix: Actually test printed output
         mock_stdout.write.assert_any_call("Search results:\n")
         mock_stdout.write.assert_any_call("- https://test.com/result\n")
 
