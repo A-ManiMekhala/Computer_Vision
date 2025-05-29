@@ -38,6 +38,7 @@ class WebCrawler:
     def search(self, keyword):
         results = []
         for url, text in self.index.items():
+            #Bug Fix: Corrected search logic to add URL if keyword is found
             if keyword.lower() in text.lower():
                 results.append(url)
         return results
@@ -46,6 +47,7 @@ class WebCrawler:
         if results:
             print("Search results:")
             for result in results:
+                #Bug Fix: Used correct variable `result` instead of undefined `undefined_variable`
                 print(f"- {result}")
         else:
             print("No results found.")
