@@ -15,10 +15,14 @@ class WebCrawler:
         self.visited.add(url)
 
         try:
+            #Bug Fix: Added headers and timeout to avoid 403 errors and hanging requests
             headers = {'User-Agent': 'Mozilla/5.0'}
             response = requests.get(url, headers=headers, timeout=5)
             soup = BeautifulSoup(response.text, 'html.parser')
+            #Bug Fix: Store page text correctly in index
             self.index[url] = soup.get_text()
+
+            #Bug Fix: Use base_url to limit crawling to internal domain only
 
             base_url = base_url or url
             parsed_base = urlparse(base_url)
@@ -29,10 +33,11 @@ class WebCrawler:
                     joined_url = urljoin(base_url, href)
                     parsed_href = urlparse(joined_url)
 
-                    # Only follow internal links
+                    #Bug Fix: Only follow internal links (same domain or relative)
                     if parsed_href.netloc == '' or parsed_href.netloc == parsed_base.netloc:
                         self.crawl(joined_url, base_url)
         except Exception as e:
+            #Bug Fix: Added error handling so the crawler doesn’t crash
             print(f"Error crawling {url}: {e}")
 
     def search(self, keyword):
