@@ -92,7 +92,6 @@ class WebCrawlerTests(unittest.TestCase):
         crawler = WebCrawler()
         crawler.crawl("https://example.com")
 
-        # About page is internal, should be visited
         self.assertIn("https://example.com/about", crawler.visited)
         self.assertIn("https://example.com", crawler.index)
 
@@ -103,7 +102,6 @@ class WebCrawlerTests(unittest.TestCase):
         crawler = WebCrawler()
         crawler.crawl("https://example.com")
 
-        # Even though there was an error, the URL should be marked as visited
         self.assertIn("https://example.com", crawler.visited)
 
     def test_search(self):
@@ -118,7 +116,6 @@ class WebCrawlerTests(unittest.TestCase):
     def test_print_results(self, mock_stdout):
         crawler = WebCrawler()
         crawler.print_results(["https://test.com/result"])
-        # Bug Fix: Actually test printed output
         mock_stdout.write.assert_any_call("Search results:\n")
         mock_stdout.write.assert_any_call("- https://test.com/result\n")
 
