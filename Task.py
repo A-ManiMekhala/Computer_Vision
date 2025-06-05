@@ -92,6 +92,7 @@ class WebCrawlerTests(unittest.TestCase):
         crawler = WebCrawler()
         crawler.crawl("https://example.com")
 
+        # Bug Fix: Assert that internal link "/about" is visited
         self.assertIn("https://example.com/about", crawler.visited)
         self.assertIn("https://example.com", crawler.index)
 
@@ -102,6 +103,7 @@ class WebCrawlerTests(unittest.TestCase):
         crawler = WebCrawler()
         crawler.crawl("https://example.com")
 
+         # Bug Fix: Ensure URL is marked as visited even on error
         self.assertIn("https://example.com", crawler.visited)
 
     def test_search(self):
@@ -109,6 +111,7 @@ class WebCrawlerTests(unittest.TestCase):
         crawler.index["page1"] = "This has the keyword"
         crawler.index["page2"] = "No key here"
 
+         # Bug Fix: Test correct search logic — only include matching pages
         results = crawler.search("keyword")
         self.assertEqual(results, ["page1"])
 
